@@ -1,103 +1,156 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import React, { useState, useEffect } from "react";
+import algoliasearch from "algoliasearch/lite";
+import { createClient } from "@supabase/supabase-js";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
+const algoliaClient = algoliasearch(
+  process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!,
+  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY!
+);
+
+const romanticIndex = algoliaClient.initIndex("dev_romantic_status_options");
+const commitmentIndex = algoliaClient.initIndex("dev_commitment_expectations_options");
+const parentalStatusIndex = algoliaClient.initIndex("dev_parental_status_options");
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+
+export default function UserProfileForm() {
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    username: "",
+    birth_year: "",
+    romantic_status: "",
+    commitment_expectations: "",
+    parental_status: "",
+  });
+
+  const [romanticOptions, setRomanticOptions] = useState<any[]>([]);
+  const [commitmentOptions, setCommitmentOptions] = useState<any[]>([]);
+  const [parentalOptions, setParentalOptions] = useState<any[]>([]);
+  const [selectedLabels, setSelectedLabels] = useState({
+    romantic_status: "",
+    commitment_expectations: "",
+    parental_status: "",
+  });
+
+  useEffect(() => {
+    romanticIndex.search("").then(({ hits }) => setRomanticOptions(hits));
+    commitmentIndex.search("").then(({ hits }) => setCommitmentOptions(hits));
+    parentalStatusIndex.search("").then(({ hits }) => setParentalOptions(hits));
+  }, []);
+
+  const handleChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+
+    const source =
+      field === "romantic_status"
+        ? romanticOptions
+        : field === "commitment_expectations"
+        ? commitmentOptions
+        : parentalOptions;
+
+    const label = source.find((opt) => opt.status === value || opt.name === value)?.user_friendly_label || "";
+    setSelectedLabels((prev) => ({ ...prev, [field]: label }));
+  };
+
+  const handleSubmit = async () => {
+    const { error } = await supabase.from("user_basic_info").insert([formData]);
+    if (error) {
+      alert("Error saving profile.");
+      console.error(error);
+    } else {
+      alert("Profile saved successfully.");
+    }
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="p-6 space-y-4 max-w-xl mx-auto">
+      <Input
+        placeholder="First Name"
+        value={formData.first_name}
+        onChange={(e) => handleChange("first_name", e.target.value)}
+      />
+      <Input
+        placeholder="Last Name"
+        value={formData.last_name}
+        onChange={(e) => handleChange("last_name", e.target.value)}
+      />
+      <Input
+        placeholder="Username"
+        value={formData.username}
+        onChange={(e) => handleChange("username", e.target.value)}
+      />
+      <Input
+        placeholder="Birth Year (e.g. 1980)"
+        value={formData.birth_year}
+        onChange={(e) => handleChange("birth_year", e.target.value)}
+      />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      <div>
+        <label>Romantic Status</label>
+        <select
+          className="w-full border p-2 rounded"
+          value={formData.romantic_status}
+          onChange={(e) => handleChange("romantic_status", e.target.value)}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          <option value="">Select Romantic Status</option>
+          {romanticOptions.map((opt) => (
+            <option key={opt.objectID} value={opt.status}>
+              {opt.status}
+            </option>
+          ))}
+        </select>
+        {selectedLabels.romantic_status && (
+          <p className="text-sm text-gray-500 mt-1">{selectedLabels.romantic_status}</p>
+        )}
+      </div>
+
+      <div>
+        <label>Commitment Expectations</label>
+        <select
+          className="w-full border p-2 rounded"
+          value={formData.commitment_expectations}
+          onChange={(e) => handleChange("commitment_expectations", e.target.value)}
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          <option value="">Select Commitment Expectation</option>
+          {commitmentOptions.map((opt) => (
+            <option key={opt.objectID} value={opt.name}>
+              {opt.name}
+            </option>
+          ))}
+        </select>
+        {selectedLabels.commitment_expectations && (
+          <p className="text-sm text-gray-500 mt-1">{selectedLabels.commitment_expectations}</p>
+        )}
+      </div>
+
+      <div>
+        <label>Parental Status</label>
+        <select
+          className="w-full border p-2 rounded"
+          value={formData.parental_status}
+          onChange={(e) => handleChange("parental_status", e.target.value)}
         >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          <option value="">Select Parental Status</option>
+          {parentalOptions.map((opt) => (
+            <option key={opt.objectID} value={opt.status}>
+              {opt.status}
+            </option>
+          ))}
+        </select>
+        {selectedLabels.parental_status && (
+          <p className="text-sm text-gray-500 mt-1">{selectedLabels.parental_status}</p>
+        )}
+      </div>
+
+      <Button onClick={handleSubmit}>Save Profile</Button>
     </div>
   );
 }
