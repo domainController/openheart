@@ -1,156 +1,213 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import algoliasearch from "algoliasearch/lite";
-import { createClient } from "@supabase/supabase-js";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 
-const algoliaClient = algoliasearch(
-  process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!,
-  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY!
-);
+type Option = {
+  value: string;
+  label: string;
+};
 
-const romanticIndex = algoliaClient.initIndex("dev_romantic_status_options");
-const commitmentIndex = algoliaClient.initIndex("dev_commitment_expectations_options");
-const parentalStatusIndex = algoliaClient.initIndex("dev_parental_status_options");
+type AlgoliaHit = {
+  objectID: string;
+  user_friendly_label?: string;
+  status?: string;
+  name?: string;
+};
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+const calculatePreciseAge = (birthDate: Date): number => {
+  const now = new Date();
+  const ageInMs = now.getTime() - birthDate.getTime();
+  const ageInYears = ageInMs / (1000 * 60 * 60 * 24 * 365.25);
+  return Math.round(ageInYears * 10) / 10;
+};
 
-export default function UserProfileForm() {
-  const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    username: "",
-    birth_year: "",
-    romantic_status: "",
-    commitment_expectations: "",
-    parental_status: "",
-  });
+export default function Page() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  const [calculatedAge, setCalculatedAge] = useState<number | null>(null);
+  const [hasChildren, setHasChildren] = useState(false);
 
-  const [romanticOptions, setRomanticOptions] = useState<any[]>([]);
-  const [commitmentOptions, setCommitmentOptions] = useState<any[]>([]);
-  const [parentalOptions, setParentalOptions] = useState<any[]>([]);
+  const [romanticOptions, setRomanticOptions] = useState<Option[]>([]);
+  const [commitmentOptions, setCommitmentOptions] = useState<Option[]>([]);
+  const [parentalOptions, setParentalOptions] = useState<Option[]>([]);
+
   const [selectedLabels, setSelectedLabels] = useState({
     romantic_status: "",
     commitment_expectations: "",
     parental_status: "",
   });
 
+  const searchClient = algoliasearch(
+    process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!,
+    process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY!
+  );
+  const romanticIndex = searchClient.initIndex("dev_romantic_status_options");
+  const commitmentIndex = searchClient.initIndex(
+    "dev_commitment_expectations_options"
+  );
+  const parentalStatusIndex = searchClient.initIndex(
+    "dev_parental_status_options"
+  );
+
   useEffect(() => {
-    romanticIndex.search("").then(({ hits }) => setRomanticOptions(hits));
-    commitmentIndex.search("").then(({ hits }) => setCommitmentOptions(hits));
-    parentalStatusIndex.search("").then(({ hits }) => setParentalOptions(hits));
-  }, []);
+    romanticIndex.search("").then(({ hits }) => {
+      setRomanticOptions(
+        hits.map((hit: AlgoliaHit) => ({
+          value: hit.objectID,
+          label: `${hit.name || hit.status || "Unknown"} — ${
+            hit.user_friendly_label || ""
+          }`,
+        }))
+      );
+    });
 
-  const handleChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    commitmentIndex.search("").then(({ hits }) => {
+      setCommitmentOptions(
+        hits.map((hit: AlgoliaHit) => ({
+          value: hit.objectID,
+          label: `${hit.name || hit.status || "Unknown"} — ${
+            hit.user_friendly_label || ""
+          }`,
+        }))
+      );
+    });
 
-    const source =
-      field === "romantic_status"
-        ? romanticOptions
-        : field === "commitment_expectations"
-        ? commitmentOptions
-        : parentalOptions;
+    parentalStatusIndex.search("").then(({ hits }) => {
+      setParentalOptions(
+        hits.map((hit: AlgoliaHit) => ({
+          value: hit.objectID,
+          label: `${hit.status || "Unknown"} — ${
+            hit.user_friendly_label || ""
+          }`,
+        }))
+      );
+    });
+  }, [romanticIndex, commitmentIndex, parentalStatusIndex]);
 
-    const label = source.find((opt) => opt.status === value || opt.name === value)?.user_friendly_label || "";
-    setSelectedLabels((prev) => ({ ...prev, [field]: label }));
+  const handleSelect = (field: string, value: string) => {
+    setSelectedLabels((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = async () => {
-    const { error } = await supabase.from("user_basic_info").insert([formData]);
-    if (error) {
-      alert("Error saving profile.");
-      console.error(error);
-    } else {
-      alert("Profile saved successfully.");
+  const handleSave = async () => {
+    const payload = {
+      first_name: firstName,
+      last_name: lastName,
+      username,
+      birth_date: birthDate,
+      calculated_age: calculatedAge,
+      has_children: hasChildren,
+      ...selectedLabels,
+    };
+
+    try {
+      const response = await fetch("/api/save_profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // 🔥 Obligatoire
+        },
+        body: JSON.stringify(payload), // 🔥 On stringify l'objet JS
+      });
+
+      const result = await response.json();
+      console.log("✅ Sauvegarde réussie :", result);
+    } catch (error) {
+      console.error("❌ Erreur lors de la sauvegarde :", error);
     }
   };
 
   return (
-    <div className="p-6 space-y-4 max-w-xl mx-auto">
-      <Input
+    <div className="p-4 space-y-4">
+      <input
         placeholder="First Name"
-        value={formData.first_name}
-        onChange={(e) => handleChange("first_name", e.target.value)}
+        value={firstName}
+        onChange={(e) => setFirstName(e.target.value)}
+        className="border px-2 py-1 w-full"
       />
-      <Input
+      <input
         placeholder="Last Name"
-        value={formData.last_name}
-        onChange={(e) => handleChange("last_name", e.target.value)}
+        value={lastName}
+        onChange={(e) => setLastName(e.target.value)}
+        className="border px-2 py-1 w-full"
       />
-      <Input
+      <input
         placeholder="Username"
-        value={formData.username}
-        onChange={(e) => handleChange("username", e.target.value)}
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        className="border px-2 py-1 w-full"
       />
-      <Input
-        placeholder="Birth Year (e.g. 1980)"
-        value={formData.birth_year}
-        onChange={(e) => handleChange("birth_year", e.target.value)}
+      <input
+        type="date"
+        value={birthDate}
+        onChange={(e) => {
+          const date = e.target.value;
+          setBirthDate(date);
+          setCalculatedAge(calculatePreciseAge(new Date(date)));
+        }}
+        className="border px-2 py-1 w-full"
       />
+      {calculatedAge && <div>Age: {calculatedAge}</div>}
 
       <div>
-        <label>Romantic Status</label>
-        <select
-          className="w-full border p-2 rounded"
-          value={formData.romantic_status}
-          onChange={(e) => handleChange("romantic_status", e.target.value)}
-        >
-          <option value="">Select Romantic Status</option>
-          {romanticOptions.map((opt) => (
-            <option key={opt.objectID} value={opt.status}>
-              {opt.status}
-            </option>
-          ))}
-        </select>
-        {selectedLabels.romantic_status && (
-          <p className="text-sm text-gray-500 mt-1">{selectedLabels.romantic_status}</p>
-        )}
+        <label className="block font-medium mb-1">Has Children?</label>
+        <input
+          type="checkbox"
+          checked={hasChildren}
+          onChange={() => setHasChildren(!hasChildren)}
+        />
       </div>
 
-      <div>
-        <label>Commitment Expectations</label>
-        <select
-          className="w-full border p-2 rounded"
-          value={formData.commitment_expectations}
-          onChange={(e) => handleChange("commitment_expectations", e.target.value)}
-        >
-          <option value="">Select Commitment Expectation</option>
-          {commitmentOptions.map((opt) => (
-            <option key={opt.objectID} value={opt.name}>
-              {opt.name}
-            </option>
-          ))}
-        </select>
-        {selectedLabels.commitment_expectations && (
-          <p className="text-sm text-gray-500 mt-1">{selectedLabels.commitment_expectations}</p>
-        )}
-      </div>
+      <select
+        value={selectedLabels.romantic_status}
+        onChange={(e) => handleSelect("romantic_status", e.target.value)}
+        className="border px-2 py-1 w-full"
+      >
+        <option value="">Select Romantic Status</option>
+        {romanticOptions.map((opt) => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
 
-      <div>
-        <label>Parental Status</label>
+      <select
+        value={selectedLabels.commitment_expectations}
+        onChange={(e) =>
+          handleSelect("commitment_expectations", e.target.value)
+        }
+        className="border px-2 py-1 w-full"
+      >
+        <option value="">Select Commitment Expectations</option>
+        {commitmentOptions.map((opt) => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
+
+      {hasChildren && (
         <select
-          className="w-full border p-2 rounded"
-          value={formData.parental_status}
-          onChange={(e) => handleChange("parental_status", e.target.value)}
+          value={selectedLabels.parental_status}
+          onChange={(e) => handleSelect("parental_status", e.target.value)}
+          className="border px-2 py-1 w-full"
         >
           <option value="">Select Parental Status</option>
           {parentalOptions.map((opt) => (
-            <option key={opt.objectID} value={opt.status}>
-              {opt.status}
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
             </option>
           ))}
         </select>
-        {selectedLabels.parental_status && (
-          <p className="text-sm text-gray-500 mt-1">{selectedLabels.parental_status}</p>
-        )}
-      </div>
+      )}
 
-      <Button onClick={handleSubmit}>Save Profile</Button>
+      <button
+        onClick={handleSave}
+        className="bg-blue-600 text-white px-4 py-2 rounded"
+      >
+        Save
+      </button>
     </div>
   );
 }
