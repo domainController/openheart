@@ -1,0 +1,15 @@
+{
+    "recommendations": [
+      "esbenp.prettier-vscode",             // Formatage automatique du code
+      "dbaeumer.vscode-eslint",             // Linting JS/TS
+      "formulahendry.auto-rename-tag",      // Auto-rename des balises HTML
+      "bradlc.vscode-tailwindcss",          // Support Tailwind CSS
+      "prisma.prisma",                      // Prisma schema support (optionnel)
+      "supabase.supabase",                  // Extension Supabase officielle
+      "github.vscode-pull-request-github",  // Intégration GitHub
+      "xabikos.javascriptsnippets",         // Snippets JS/TS
+      "dsznajder.es7-react-js-snippets",    // Snippets React/Redux
+      "oderwat.indent-rainbow",             // Visualisation des indentations
+      "eamodio.gitlens"                     // Amélioration de l’interface Git
+    ]
+  }
