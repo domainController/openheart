@@ -1,6 +1,6 @@
 "use client";
 
-import UserProfileForm from "@/app/components/formFields/UserProfileForm";
+import { UserProfileForm } from "@/components/formFields/UserProfileForm";
 
 export default function PagePreviewForm() {
   return (
