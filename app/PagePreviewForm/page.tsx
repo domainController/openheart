@@ -1,15 +1,16 @@
 "use client";
 
-import { UserProfileForm } from "@/components/formFields/UserProfileForm";
+import React from "react";
+import { fileForm } from "@/app/components/formFields/UserProfileForm";
 
-export default function UserProfileForm({ userId }: fileFormProps) {
+export default function PagePreviewForm() {
   return (
-    <main className="min-h-screen bg-white p-6">
-      <div className="max-w-3xl mx-auto">
+    <main className="p-10">
+      <div className="max-w-4xl mx-auto">
         <h1 className="text-2xl font-bold mb-6">
           🔎 Profile Preview (UI Test)
         </h1>
-        <UserProfileForm userId="1" />
+        <fileForm userId="1" />
       </div>
     </main>
   );
