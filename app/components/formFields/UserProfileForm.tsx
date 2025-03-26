@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 
 type Props = {
@@ -8,145 +8,71 @@ type Props = {
 };
 
 export default function UserProfileForm({ userId }: Props) {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
-  const [romanticStatus, setRomanticStatus] = useState("");
-  const [commitmentExpectations, setCommitmentExpectations] = useState("");
-  const [parentalStatus, setParentalStatus] = useState("");
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    username: "",
+    romantic_status: "",
+    commitment_expectations: "",
+    parental_status: "",
+  });
 
   useEffect(() => {
-    async function fetchUserData() {
+    const fetchData = async () => {
       const { data, error } = await supabase
-        .from("user_basic_info")
-        .select("*")
+        .from("user_profile")
+        .select(
+          "first_name, last_name, username, romantic_status, commitment_expectations, parental_status"
+        )
         .eq("user_id", userId)
         .single();
 
-      if (error) {
-        console.error("Erreur lors du chargement :", error);
-        return;
+      if (!error && data) {
+        setFormData((prev) => ({ ...prev, ...data }));
       }
+    };
 
-      setFirstName(data.first_name || "");
-      setLastName(data.last_name || "");
-      setUsername(data.username || "");
-      setRomanticStatus(data.romantic_status || "");
-      setCommitmentExpectations(data.commitment_expectations || "");
-      setParentalStatus(data.parental_status || "");
-    }
-
-    fetchUserData();
+    fetchData();
   }, [userId]);
 
-  async function saveField(fieldName: string, value: string) {
-    const { error } = await supabase
-      .from("user_basic_info")
-      .update({ [fieldName]: value })
+  const saveField = async (field: keyof typeof formData) => {
+    await supabase
+      .from("user_profile")
+      .update({ [field]: formData[field] })
       .eq("user_id", userId);
-
-    if (error) {
-      console.error(
-        `Erreur lors de la sauvegarde du champ ${fieldName} :`,
-        error
-      );
-    } else {
-      console.log(`Champ ${fieldName} sauvegardé avec succès.`);
-    }
-  }
+  };
 
   return (
-    <div className="p-4 space-y-6">
-      <div>
-        <label>First Name</label>
-        <input
-          className="border p-2 ml-2"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-        />
-        <button
-          className="ml-2 px-3 py-1 border rounded"
-          onClick={() => saveField("first_name", firstName)}
-        >
-          Save
-        </button>
-      </div>
-
-      <div>
-        <label>Last Name</label>
-        <input
-          className="border p-2 ml-2"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
-        <button
-          className="ml-2 px-3 py-1 border rounded"
-          onClick={() => saveField("last_name", lastName)}
-        >
-          Save
-        </button>
-      </div>
-
-      <div>
-        <label>Username</label>
-        <input
-          className="border p-2 ml-2"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <button
-          className="ml-2 px-3 py-1 border rounded"
-          onClick={() => saveField("username", username)}
-        >
-          Save
-        </button>
-      </div>
-
-      <div>
-        <label>Romantic Status</label>
-        <input
-          className="border p-2 ml-2"
-          value={romanticStatus}
-          onChange={(e) => setRomanticStatus(e.target.value)}
-        />
-        <button
-          className="ml-2 px-3 py-1 border rounded"
-          onClick={() => saveField("romantic_status", romanticStatus)}
-        >
-          Save
-        </button>
-      </div>
-
-      <div>
-        <label>Commitment Expectations</label>
-        <input
-          className="border p-2 ml-2"
-          value={commitmentExpectations}
-          onChange={(e) => setCommitmentExpectations(e.target.value)}
-        />
-        <button
-          className="ml-2 px-3 py-1 border rounded"
-          onClick={() =>
-            saveField("commitment_expectations", commitmentExpectations)
-          }
-        >
-          Save
-        </button>
-      </div>
-
-      <div>
-        <label>Parental Status</label>
-        <input
-          className="border p-2 ml-2"
-          value={parentalStatus}
-          onChange={(e) => setParentalStatus(e.target.value)}
-        />
-        <button
-          className="ml-2 px-3 py-1 border rounded"
-          onClick={() => saveField("parental_status", parentalStatus)}
-        >
-          Save
-        </button>
+    <div className="max-w-3xl mx-auto px-4 py-8">
+      <div className="space-y-4">
+        {Object.entries({
+          first_name: "First Name",
+          last_name: "Last Name",
+          username: "Username",
+          romantic_status: "Romantic Status",
+          commitment_expectations: "Commitment Expectations",
+          parental_status: "Parental Status",
+        }).map(([key, label]) => (
+          <div key={key} className="flex items-center gap-2">
+            <label className="w-56 font-semibold">{label}</label>
+            <input
+              className="border p-2 rounded w-full"
+              value={formData[key as keyof typeof formData] || ""}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  [key]: e.target.value,
+                }))
+              }
+            />
+            <button
+              className="bg-black text-white px-3 py-1 rounded hover:bg-gray-800"
+              onClick={() => saveField(key as keyof typeof formData)}
+            >
+              Save
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );
