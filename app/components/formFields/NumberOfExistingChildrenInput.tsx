@@ -1,6 +1,7 @@
 "use client";
 
 import { InputHTMLAttributes } from "react";
+import { supabase } from "@/utils/supabase/client";
 
 interface NumberOfExistingChildrenInputProps
   extends InputHTMLAttributes<HTMLInputElement> {

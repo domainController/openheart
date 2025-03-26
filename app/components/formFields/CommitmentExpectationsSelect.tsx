@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@/utils/supabase/client";
-import commitmentOptions from "@/components/data/commitment_expectations_options.json";
+import { supabase } from "@/utils/supabase/client";
 
 interface CommitmentExpectationsProps {
   value: string;

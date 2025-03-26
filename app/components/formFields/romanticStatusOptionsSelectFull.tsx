@@ -1,7 +1,7 @@
 "use client";
 
 import romanticStatusOptions from "@/app/components/data/romantic_status_options_full.json";
-import { Select } from "../components/form_components/selects/Select";
+import { supabase } from "@/utils/supabase/client";
 
 interface RomanticStatusSelectProps {
   value: string;

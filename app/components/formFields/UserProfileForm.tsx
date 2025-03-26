@@ -1,29 +1,29 @@
 "use client";
 
 import { useState } from "react";
-import { FirstNameInput } from "./FirstNameInput";
-import { LastNameInput } from "./LastNameInput";
-import { UsernameInput } from "./UsernameInput";
-import { CommitmentExpectationsSelect } from "./CommitmentExpectationsSelect";
-import { HasChildrenToggle } from "./HasChildrenToggle";
-import { ParentalStatusSelect } from "./ParentalStatusSelect";
-import { RegionOfOriginSelect } from "./RegionOfOriginSelect";
-import { OriginalCountrySelect } from "./OriginalCountrySelect";
-import { createClient } from "@/utils/supabase/client";
+import { supabase } from "@/utils/supabase/client";
 
-interface UserProfileFormProps {
+interface fileFormProps {
   userId: string;
 }
 
-export function UserProfileForm({ userId }: UserProfileFormProps) {
+export function fileForm({ userId }: fileFormProps) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [commitmentExpectations, setCommitmentExpectations] = useState("");
+  const [romanticStatus, setRomanticStatus] = useState("");
   const [hasChildren, setHasChildren] = useState(false);
   const [parentalStatus, setParentalStatus] = useState("");
   const [regionOfOrigin, setRegionOfOrigin] = useState("");
   const [originalCountry, setOriginalCountry] = useState("");
+  const [familyRoleVision, setFamilyRoleVision] = useState<string[]>([]);
+  const [childrenEducationVision, setChildrenEducationVision] = useState<
+    string[]
+  >([]);
+  const [desiredPrimaryIncomeEarner, setDesiredPrimaryIncomeEarner] = useState<
+    string[]
+  >([]);
 
   return (
     <div className="space-y-8">
@@ -47,40 +47,54 @@ export function UserProfileForm({ userId }: UserProfileFormProps) {
       </div>
 
       <div className="p-4 border rounded shadow-sm">
-        <h2 className="text-lg font-semibold mb-2">Origin</h2>
-        <OriginalCountrySelect
-          value={originalCountry}
-          onChange={setOriginalCountry}
-          userId={userId}
+        <h2 className="text-lg font-semibold mb-2">
+          Relationship & Family Status
+        </h2>
+        <RomanticStatusOptionsSelectFull
+          value={romanticStatus}
+          onChange={setRomanticStatus}
         />
-        <RegionOfOriginSelect
-          value={regionOfOrigin}
-          onChange={setRegionOfOrigin}
-          userId={userId}
-        />
-      </div>
-
-      <div className="p-4 border rounded shadow-sm">
-        <h2 className="text-lg font-semibold mb-2">Commitment</h2>
         <CommitmentExpectationsSelect
           value={commitmentExpectations}
           onChange={setCommitmentExpectations}
-          userId={userId}
+        />
+        <HasChildrenToggle value={hasChildren} onChange={setHasChildren} />
+        {hasChildren && (
+          <ParentalStatusSelect
+            value={parentalStatus}
+            onChange={setParentalStatus}
+          />
+        )}
+      </div>
+
+      <div className="p-4 border rounded shadow-sm">
+        <h2 className="text-lg font-semibold mb-2">Origin</h2>
+        <RegionOfOriginSelect
+          value={regionOfOrigin}
+          onChange={setRegionOfOrigin}
+        />
+        <OriginalCountrySelect
+          value={originalCountry}
+          onChange={setOriginalCountry}
         />
       </div>
 
       <div className="p-4 border rounded shadow-sm">
-        <h2 className="text-lg font-semibold mb-2">Parental Status</h2>
-        <HasChildrenToggle
-          value={hasChildren}
-          onChange={setHasChildren}
+        <h2 className="text-lg font-semibold mb-2">Partner Expectations</h2>
+        <FamilyRoleVisionSelect
+          value={familyRoleVision}
+          onChange={setFamilyRoleVision}
           userId={userId}
         />
-        <ParentalStatusSelect
-          value={parentalStatus}
-          onChange={setParentalStatus}
+        <ChildrenEducationVisionSelect
+          value={childrenEducationVision}
+          onChange={setChildrenEducationVision}
           userId={userId}
-          hasChildren={hasChildren}
+        />
+        <DesiredPrimaryIncomeEarnerSelect
+          value={desiredPrimaryIncomeEarner}
+          onChange={setDesiredPrimaryIncomeEarner}
+          userId={userId}
         />
       </div>
     </div>

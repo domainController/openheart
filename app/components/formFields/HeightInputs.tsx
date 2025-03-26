@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { supabase } from "@/utils/supabase/client";
 
 interface HeightInputProps {
   value: string;

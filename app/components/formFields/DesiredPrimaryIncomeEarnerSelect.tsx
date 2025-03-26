@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { supabase } from "@/utils/supabase/client";
 
 const options = [
   { value: "Me", label: "I expect to be the primary income earner" },

@@ -1,5 +1,5 @@
 import React from "react";
-import { Input } from "../form_components/inputs/Input";
+import { supabase } from "@/utils/supabase/client";
 interface LastNameInputProps {
   value: string;
   onChange: (value: string) => void;

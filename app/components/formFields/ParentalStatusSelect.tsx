@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { createClient } from "@/utils/supabase/client";
-import parentalStatusOptions from "@/components/data/parental_status_options.json";
+import { supabase } from "@/utils/supabase/client";
 
 interface ParentalStatusSelectProps {
   value: string;

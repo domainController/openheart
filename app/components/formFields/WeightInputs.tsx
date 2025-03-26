@@ -1,6 +1,7 @@
 "use client";
 
 import { Input } from "@/components/form_components/inputs/Input";
+import { supabase } from "@/utils/supabase/client";
 
 interface WeightInputProps {
   value: string;

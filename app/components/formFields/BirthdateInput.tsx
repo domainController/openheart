@@ -1,9 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Input } from "@/components/form_components/inputs/Input";
-import { createClient } from "@/utils/supabase/client";
-import calculateAge from "@/utils/calculateAge";
+import { supabase } from "@/utils/supabase/client";
 
 interface BirthdateInputProps {
   birthdate: string;
