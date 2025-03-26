@@ -2,7 +2,7 @@
 
 import { UserProfileForm } from "@/components/formFields/UserProfileForm";
 
-export default function PagePreviewForm() {
+export default function UserProfileForm({ userId }: fileFormProps) {
   return (
     <main className="min-h-screen bg-white p-6">
       <div className="max-w-3xl mx-auto">
