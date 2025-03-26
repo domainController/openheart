@@ -1,0 +1,38 @@
+[
+  {
+    "label": "Public School System",
+    "value": "Public School System"
+  },
+  {
+    "label": "Private School System",
+    "value": "Private School System"
+  },
+  {
+    "label": "Religious Education",
+    "value": "Religious Education"
+  },
+  {
+    "label": "Homeschooling",
+    "value": "Homeschooling"
+  },
+  {
+    "label": "Unschooling / Self-Directed Learning",
+    "value": "Unschooling / Self-Directed Learning"
+  },
+  {
+    "label": "International Schools / Multilingual Education",
+    "value": "International Schools / Multilingual Education"
+  },
+  {
+    "label": "Elite Schools / Competitive Education",
+    "value": "Elite Schools / Competitive Education"
+  },
+  {
+    "label": "Flexible / Child-Led Education Path",
+    "value": "Flexible / Child-Led Education Path"
+  },
+  {
+    "label": "Other (please specify)",
+    "value": "Other (please specify)"
+  }
+]

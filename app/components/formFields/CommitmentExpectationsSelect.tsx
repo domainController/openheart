@@ -1,22 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
-import parentalStatusOptions from "@/components/data/parental_status_options.json";
+import commitmentOptions from "@/components/data/commitment_expectations_options.json";
 
-interface ParentalStatusSelectProps {
+interface CommitmentExpectationsProps {
   value: string;
   onChange: (value: string) => void;
   userId: string;
-  hasChildren: boolean;
 }
 
-export function ParentalStatusSelect({
+export function CommitmentExpectationsSelect({
   value,
   onChange,
   userId,
-  hasChildren,
-}: ParentalStatusSelectProps) {
+}: CommitmentExpectationsProps) {
   const supabase = createClient();
   const [loading, setLoading] = useState(false);
 
@@ -24,32 +22,30 @@ export function ParentalStatusSelect({
     setLoading(true);
     const { error } = await supabase
       .from("user_basic_info")
-      .update({ parental_status: value })
+      .update({ commitment_expectations: value })
       .eq("user_id", userId);
     setLoading(false);
     if (error) {
       console.error(
-        "Erreur lors de la sauvegarde de parental_status :",
+        "Erreur lors de la sauvegarde des commitment expectations :",
         error.message
       );
     }
   };
 
-  if (!hasChildren) return null;
-
   return (
     <div className="w-full space-y-1">
-      <label htmlFor="parental_status" className="text-sm font-medium">
-        Parental Status
+      <label htmlFor="commitment_expectations" className="text-sm font-medium">
+        Commitment Expectations
       </label>
       <select
-        id="parental_status"
+        id="commitment_expectations"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="w-full border border-gray-300 px-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         <option value="">Select an option</option>
-        {parentalStatusOptions.map((option: any) => (
+        {commitmentOptions.map((option: any) => (
           <option key={option.value} value={option.value}>
             {option.user_friendly_label} — {option.description}
           </option>

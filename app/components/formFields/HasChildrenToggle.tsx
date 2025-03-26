@@ -1,59 +1,55 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
-import parentalStatusOptions from "@/components/data/parental_status_options.json";
 
-interface ParentalStatusSelectProps {
-  value: string;
-  onChange: (value: string) => void;
+interface HasChildrenToggleProps {
+  value: boolean;
+  onChange: (value: boolean) => void;
   userId: string;
-  hasChildren: boolean;
 }
 
-export function ParentalStatusSelect({
+export function HasChildrenToggle({
   value,
   onChange,
   userId,
-  hasChildren,
-}: ParentalStatusSelectProps) {
+}: HasChildrenToggleProps) {
   const supabase = createClient();
   const [loading, setLoading] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    onChange(e.target.value === "true");
+  };
 
   const handleSave = async () => {
     setLoading(true);
     const { error } = await supabase
       .from("user_basic_info")
-      .update({ parental_status: value })
+      .update({ has_children: value })
       .eq("user_id", userId);
     setLoading(false);
     if (error) {
       console.error(
-        "Erreur lors de la sauvegarde de parental_status :",
+        "Erreur lors de la sauvegarde de has_children :",
         error.message
       );
     }
   };
 
-  if (!hasChildren) return null;
-
   return (
     <div className="w-full space-y-1">
-      <label htmlFor="parental_status" className="text-sm font-medium">
-        Parental Status
+      <label htmlFor="has_children" className="text-sm font-medium">
+        Has Children
       </label>
       <select
-        id="parental_status"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
+        id="has_children"
+        value={value.toString()}
+        onChange={handleChange}
         className="w-full border border-gray-300 px-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         <option value="">Select an option</option>
-        {parentalStatusOptions.map((option: any) => (
-          <option key={option.value} value={option.value}>
-            {option.user_friendly_label} — {option.description}
-          </option>
-        ))}
+        <option value="true">Yes</option>
+        <option value="false">No</option>
       </select>
       <button
         onClick={handleSave}

@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "value": "no_preference",
+    "user_friendly_label": "No preference",
+    "example": "Je m’adapterai selon la situation."
+  },
+  {
+    "id": 2,
+    "value": "me",
+    "user_friendly_label": "I want to be the main income earner",
+    "example": "Je souhaite subvenir aux besoins du foyer principal."
+  },
+  {
+    "id": 3,
+    "value": "partner",
+    "user_friendly_label": "I want my partner to be the main income earner",
+    "example": "J’aimerais un partenaire stable financièrement."
+  },
+  {
+    "id": 4,
+    "value": "shared_equally",
+    "user_friendly_label": "I want to share financial responsibilities equally",
+    "example": "Chacun contribue aux charges à parts égales."
+  },
+  {
+    "id": 5,
+    "value": "depends_on_context",
+    "user_friendly_label": "It depends on the context",
+    "example": "En fonction des opportunités ou des projets du couple."
+  },
+  {
+    "id": 6,
+    "value": "not_a_priority",
+    "user_friendly_label": "I don't prioritize this aspect",
+    "example": "Je préfère ne pas me fixer sur ce critère dès le départ."
+  }
+]

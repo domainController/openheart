@@ -1,52 +1,87 @@
-// app/components/formFields/UserProfileForm.tsx
-
 "use client";
 
-import React from "react";
-import FirstNameInput from "./FirstNameInput";
-import LastNameInput from "./LastNameInput";
-import UsernameInput from "./UsernameInput";
-import BirthdateInput from "./BirthdateInput";
-import RomanticStatusOptionsSelectFull from "./RomanticStatusOptionsSelectFull";
+import { useState } from "react";
+import { FirstNameInput } from "./FirstNameInput";
+import { LastNameInput } from "./LastNameInput";
+import { UsernameInput } from "./UsernameInput";
+import { CommitmentExpectationsSelect } from "./CommitmentExpectationsSelect";
+import { HasChildrenToggle } from "./HasChildrenToggle";
+import { ParentalStatusSelect } from "./ParentalStatusSelect";
+import { RegionOfOriginSelect } from "./RegionOfOriginSelect";
+import { OriginalCountrySelect } from "./OriginalCountrySelect";
+import { createClient } from "@/utils/supabase/client";
 
-export default function UserProfileForm() {
+interface UserProfileFormProps {
+  userId: string;
+}
+
+export function UserProfileForm({ userId }: UserProfileFormProps) {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [commitmentExpectations, setCommitmentExpectations] = useState("");
+  const [hasChildren, setHasChildren] = useState(false);
+  const [parentalStatus, setParentalStatus] = useState("");
+  const [regionOfOrigin, setRegionOfOrigin] = useState("");
+  const [originalCountry, setOriginalCountry] = useState("");
+
   return (
-    <div className="space-y-6">
-      {/* 🔷 Identity Section */}
-      <div className="border p-4 rounded-xl shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">🧬 Identity</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FirstNameInput value="" onChange={() => {}} />
-          <LastNameInput value="" onChange={() => {}} />
-          <UsernameInput value="" onChange={() => {}} />
-          <BirthdateInput value="" onChange={() => {}} />
-        </div>
+    <div className="space-y-8">
+      <div className="p-4 border rounded shadow-sm">
+        <h2 className="text-lg font-semibold mb-2">Identity</h2>
+        <FirstNameInput
+          value={firstName}
+          onChange={setFirstName}
+          userId={userId}
+        />
+        <LastNameInput
+          value={lastName}
+          onChange={setLastName}
+          userId={userId}
+        />
+        <UsernameInput
+          value={username}
+          onChange={setUsername}
+          userId={userId}
+        />
       </div>
 
-      {/* 💘 Romantic Status Section */}
-      <div className="border p-4 rounded-xl shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">💘 Romantic Status</h2>
-        <RomanticStatusOptionsSelectFull value="" onChange={() => {}} />
+      <div className="p-4 border rounded shadow-sm">
+        <h2 className="text-lg font-semibold mb-2">Origin</h2>
+        <OriginalCountrySelect
+          value={originalCountry}
+          onChange={setOriginalCountry}
+          userId={userId}
+        />
+        <RegionOfOriginSelect
+          value={regionOfOrigin}
+          onChange={setRegionOfOrigin}
+          userId={userId}
+        />
       </div>
 
-      {/* 🔮 Vision / Aspirations Section (à venir) */}
-      <div className="border p-4 rounded-xl shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">🔮 Vision & Aspirations</h2>
-        <p className="text-sm text-gray-500">(À venir...)</p>
+      <div className="p-4 border rounded shadow-sm">
+        <h2 className="text-lg font-semibold mb-2">Commitment</h2>
+        <CommitmentExpectationsSelect
+          value={commitmentExpectations}
+          onChange={setCommitmentExpectations}
+          userId={userId}
+        />
       </div>
 
-      {/* 🌍 Origins Section (à venir) */}
-      <div className="border p-4 rounded-xl shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">🌍 Origins & Heritage</h2>
-        <p className="text-sm text-gray-500">(À venir...)</p>
-      </div>
-
-      {/* 🧠 Preferences & Expectations (à venir) */}
-      <div className="border p-4 rounded-xl shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">
-          🧠 Preferences & Partner Expectations
-        </h2>
-        <p className="text-sm text-gray-500">(À venir...)</p>
+      <div className="p-4 border rounded shadow-sm">
+        <h2 className="text-lg font-semibold mb-2">Parental Status</h2>
+        <HasChildrenToggle
+          value={hasChildren}
+          onChange={setHasChildren}
+          userId={userId}
+        />
+        <ParentalStatusSelect
+          value={parentalStatus}
+          onChange={setParentalStatus}
+          userId={userId}
+          hasChildren={hasChildren}
+        />
       </div>
     </div>
   );

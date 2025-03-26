@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "status": "Single-Parent Raising Children Alone",
+    "user_friendly_label": "You are raising your children alone, without help from the other parent."
+  },
+  {
+    "id": 2,
+    "status": "Shared Custody (Active Co-Parenting)",
+    "user_friendly_label": "You share parenting responsibilities equally with the other parent."
+  },
+  {
+    "id": 3,
+    "status": "Shared Custody (Other Parent is a Weekend/Occasional Parent)",
+    "user_friendly_label": "You have shared custody but the other parent is only occasionally involved."
+  },
+  {
+    "id": 4,
+    "status": "Joint Custody Parent (Geographic Restriction)",
+    "user_friendly_label": "You must live near the other parent for legal or practical reasons."
+  },
+  {
+    "id": 5,
+    "status": "Long-Distance Parent",
+    "user_friendly_label": "You live far from your child(ren) and maintain remote contact."
+  },
+  {
+    "id": 6,
+    "status": "Deceased Child(ren)",
+    "user_friendly_label": "You have lost one or more children."
+  }
+]

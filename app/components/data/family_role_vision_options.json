@@ -1,0 +1,30 @@
+[
+  {
+    "label": "Primarily responsible for income generation",
+    "value": "Primarily responsible for income generation"
+  },
+  {
+    "label": "Primarily responsible for child education and emotional development",
+    "value": "Primarily responsible for child education and emotional development"
+  },
+  {
+    "label": "Shared responsibilities (income and domestic/educational)",
+    "value": "Shared responsibilities (income and domestic/educational)"
+  },
+  {
+    "label": "Flexible: Depends on partner's strengths and availability",
+    "value": "Flexible: Depends on partner's strengths and availability"
+  },
+  {
+    "label": "Dedicated to home and children, no professional activity",
+    "value": "Dedicated to home and children, no professional activity"
+  },
+  {
+    "label": "Professional career first, family duties delegated (nanny, housekeeper)",
+    "value": "Professional career first, family duties delegated (nanny, housekeeper)"
+  },
+  {
+    "label": "Other (please specify)",
+    "value": "Other (please specify)"
+  }
+]

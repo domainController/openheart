@@ -1,0 +1,121 @@
+[
+  {
+    "name": "Civil Marriage",
+    "category": "Official & Structured Unions",
+    "segment": null,
+    "user_friendly_label": "Vous souhaitez vous engager dans un mariage reconnu par la loi, avec les droits et devoirs associés.",
+    "example": ""
+  },
+  {
+    "name": "Religious Marriage",
+    "category": "Official & Structured Unions",
+    "segment": null,
+    "user_friendly_label": "Vous préférez une union fondée sur des traditions religieuses, avec ou sans reconnaissance légale.",
+    "example": ""
+  },
+  {
+    "name": "Traditional Arranged Marriage",
+    "category": "Official & Structured Unions",
+    "segment": "Desi",
+    "user_friendly_label": "Vous êtes ouvert à un mariage arrangé par votre famille, dans le respect des coutumes culturelles.",
+    "example": ""
+  },
+  {
+    "name": "Long-Term Civil Union",
+    "category": "Official & Structured Unions",
+    "segment": null,
+    "user_friendly_label": "Vous recherchez une relation sérieuse reconnue légalement, sans forcément passer par le mariage.",
+    "example": ""
+  },
+  {
+    "name": "Marriage with Open Terms",
+    "category": "Official & Structured Unions",
+    "segment": null,
+    "user_friendly_label": "Vous souhaitez une union plus souple, avec des conditions discutées à deux et plus de liberté.",
+    "example": ""
+  },
+  {
+    "name": "Marriage for Visa/Residency",
+    "category": "Official & Structured Unions",
+    "segment": null,
+    "user_friendly_label": "Vous souhaitez vous marier principalement pour obtenir un visa ou un droit de résidence, tout en respectant les règles légales.",
+    "example": ""
+  },
+  {
+    "name": "Marriage with Prenup",
+    "category": "Official & Structured Unions",
+    "segment": null,
+    "user_friendly_label": "Vous souhaitez protéger vos biens ou revenus à travers un contrat prénuptial avant le mariage.",
+    "example": ""
+  },
+  {
+    "name": "Custom Legal Partnership",
+    "category": "Official & Structured Unions",
+    "segment": null,
+    "user_friendly_label": "Vous cherchez un partenariat juridique sur mesure, adapté à vos besoins sans suivre les modèles classiques.",
+    "example": ""
+  },
+  {
+    "name": "Marriage-Based Union",
+    "category": "Official & Structured Unions",
+    "segment": null,
+    "user_friendly_label": "Vous souhaitez un engagement formel, basé sur une cérémonie civile ou religieuse.",
+    "example": ""
+  },
+  {
+    "name": "Stable Partnership for Family Support",
+    "category": "Alternative & Non-Marriage Partnerships",
+    "segment": null,
+    "user_friendly_label": "Vous souhaitez une relation stable pour offrir un cadre sécurisé à votre partenaire et vos enfants.",
+    "example": ""
+  },
+  {
+    "name": "Long-Term Dating",
+    "category": "Alternative & Non-Marriage Partnerships",
+    "segment": null,
+    "user_friendly_label": "Vous recherchez une relation engagée sans nécessairement envisager le mariage.",
+    "example": ""
+  },
+  {
+    "name": "Cohabitation",
+    "category": "Alternative & Non-Marriage Partnerships",
+    "segment": null,
+    "user_friendly_label": "Vous souhaitez vivre avec votre partenaire sans formaliser votre union par un mariage.",
+    "example": ""
+  },
+  {
+    "name": "Marriage for Cultural Exchange",
+    "category": "Cross-Cultural & International Intentions",
+    "segment": null,
+    "user_friendly_label": "Vous êtes motivé par la découverte d’une autre culture à travers une relation ou un mariage.",
+    "example": ""
+  },
+  {
+    "name": "Long-Term Relationship with a Foreign National ",
+    "category": "Cross-Cultural & International Intentions",
+    "segment": null,
+    "user_friendly_label": "Vous envisagez une relation sérieuse avec une personne d’un autre pays, avec la possibilité de vous installer ensemble.",
+    "example": ""
+  },
+  {
+    "name": "Expatriate Marriage for Stability",
+    "category": "Cross-Cultural & International Intentions",
+    "segment": null,
+    "user_friendly_label": "Vous souhaitez construire une vie stable à deux dans un autre pays, souvent pour y prendre un nouveau départ.",
+    "example": ""
+  },
+  {
+    "name": "Retirement Partnership",
+    "category": "Cross-Cultural & International Intentions",
+    "segment": null,
+    "user_friendly_label": "Vous cherchez un ou une partenaire avec qui partager vos années de retraite, souvent dans un nouveau pays.",
+    "example": ""
+  },
+  {
+    "name": "Find a love in a foreign country",
+    "user_friendly_label": "Vous souhaitez trouver l’amour dans un autre pays, avec l’espoir de construire une relation stable à long terme.",
+    "category": "Cross-Cultural & International Intentions",
+    "segment": "Passport Bro",
+    "example": "Je vise les Philippines ou la Thaïlande pour rencontrer une femme et m’installer avec elle avant mes 60 ans."
+  }
+]
