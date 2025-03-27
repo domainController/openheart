@@ -1,40 +1,51 @@
 "use client";
 
-import { FC } from "react";
-import DraggableSection from "@/app/components/dndkit/DraggableSection";
+import React from "react";
 
-const sectionLabels = [
-  "Section 1",
-  "Section 2",
-  "Section 3",
-  "Section 4",
-  "Section 5",
-  "Section 6",
-  "Section 7",
-  "Section 8",
-  "Section 9",
-  "Section 10",
-  "Section 11",
-  "Section 12",
-  "Section 13",
-  "Section 14",
-  "Section 15",
-  "Section 16",
-];
-
-const DroppableGrid: FC = () => {
-  return (
-    <div className="grid grid-cols-4 gap-4 p-4">
-      {sectionLabels.map((label, index) => (
-        <DraggableSection key={index} sectionId={`section-${index + 1}`}>
-          <div className="text-sm font-semibold text-gray-700 mb-2">
-            {label}
-          </div>
-          <div className="text-gray-500 italic">Drag a component here</div>
-        </DraggableSection>
-      ))}
-    </div>
-  );
+type Section = {
+  id: string;
+  content?: React.ReactNode;
 };
 
-export default DroppableGrid;
+type Props = {
+  sections: Section[];
+};
+
+export default function GridLayoutWrapper({ sections }: Props) {
+  return (
+    <div className="w-full min-h-screen bg-blue-100 p-8">
+      <div className="grid grid-cols-4 gap-4 w-full min-h-screen">
+        {sections.map((section) => (
+          <div
+            key={section.id}
+            className="bg-white rounded-2xl shadow p-4 h-full min-h-[160px] flex flex-col justify-start"
+          >
+            <h2 className="font-semibold text-sm mb-2">{section.id}</h2>
+            {section.content ? (
+              section.content
+            ) : (
+              <p className="text-sm italic text-muted-foreground">
+                Drag a component here
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+{
+  sections.map((section) => (
+    <div key={section.id} className="bg-white rounded-xl p-4 shadow-sm">
+      <h2 className="font-semibold text-sm mb-2">{section.id}</h2>
+
+      {section.content ? (
+        section.content
+      ) : (
+        <p className="text-sm italic text-muted-foreground">
+          Drag a component here
+        </p>
+      )}
+    </div>
+  ));
+}
