@@ -36,7 +36,7 @@ const Select: React.FC<Props> = ({
     <div className="flex flex-col space-y-1.5">
       {label && <Label>{label}</Label>}
       <ShadSelect value={value} onValueChange={onChange}>
-        <SelectTrigger className="rounded-none border border-gray-300">
+        <SelectTrigger className="border-none bg-transparent shadow-none focus:outline-none text-sm">
           <SelectValue placeholder={placeholder || "Sélectionner..."} />
         </SelectTrigger>
         <SelectContent>

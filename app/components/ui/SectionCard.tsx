@@ -10,11 +10,7 @@ type SectionCardProps = {
 
 const SectionCard = ({ children, className = "" }: SectionCardProps) => {
   return (
-    <div
-      className={`"bg-white shadow-sm p-4 w-full border border-gray-200" ${className}`}
-    >
-      {children}
-    </div>
+    <div className={`"bg-transparent p-4 w-full" ${className}`}>{children}</div>
   );
 };
 export default SectionCard;
