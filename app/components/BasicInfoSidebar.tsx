@@ -1,10 +1,11 @@
 // app/components/BasicInfoSidebar.tsx
 "use client";
+import SectionCard from "@/app/components/ui/SectionCard";
 
 export default function BasicInfoSidebar() {
   return (
-    <div className="bg-white rounded-xl shadow-md p-4 space-y-4">
-      <h2 className="text-lg font-semibold">Identity</h2>
+    <SectionCard>
+      <h2 className="font-semibold text-lg">Identity</h2>
 
       <input
         placeholder="First Name"
@@ -17,6 +18,6 @@ export default function BasicInfoSidebar() {
         type="number"
         className="w-full p-2 border rounded-md"
       />
-    </div>
+    </SectionCard>
   );
 }

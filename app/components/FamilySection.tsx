@@ -1,41 +1,47 @@
 // app/components/FamilySection.tsx
 "use client";
 
-export default function FamilySection() {
+import React, { useState } from "react"; // ✅ nécessaire pour que useState fonctionne
+import SectionCard from "@/app/components/ui/SectionCard";
+import Select from "@/app/components/ui/Select";
+import parentalStatus from "@/app/components/data/parental_status_reference.json";
+
+const FamilySection = () => {
+  const [formData, setFormData] = useState({
+    hasChildren: "",
+    parentalStatus: "",
+  });
+
+  console.log("formData.hasChildren:", formData.hasChildren); // 👈 ICI
+
   return (
-    <div className="bg-white rounded-xl shadow-md p-4 space-y-4">
-      <h2 className="text-lg font-semibold">Family & Children</h2>
+    <SectionCard>
+      <Select
+        placeholder="Do you have any children?"
+        value={formData.hasChildren}
+        onChange={(val) =>
+          setFormData({
+            ...formData,
+            hasChildren: val,
+            parentalStatus: val === "yes" ? formData.parentalStatus : "",
+          })
+        }
+        options={[
+          { value: "yes", label: "Yes" },
+          { value: "no", label: "No" },
+        ]}
+      />
 
-      <div>
-        <label className="block text-sm font-medium mb-1">
-          Do you have children?
-        </label>
-        <select className="w-full p-2 border rounded-md">
-          <option value="">Select...</option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-          <option value="prefer_not_to_say">Prefer not to say</option>
-        </select>
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium mb-1">
-          Parental Status
-        </label>
-        <select className="w-full p-2 border rounded-md">
-          <option value="">Select...</option>
-          <option value="single_parent">
-            Single-Parent Raising Children Alone
-          </option>
-          <option value="co_parenting">
-            Shared Custody (Active Co-Parenting)
-          </option>
-          <option value="joint_restriction">
-            Joint Custody (Geographic Restriction)
-          </option>
-          <option value="not_applicable">Not applicable</option>
-        </select>
-      </div>
-    </div>
+      {formData.hasChildren === "yes" && (
+        <Select
+          placeholder="Parental Status"
+          value={formData.parentalStatus}
+          onChange={(val) => setFormData({ ...formData, parentalStatus: val })}
+          options={parentalStatus}
+        />
+      )}
+    </SectionCard>
   );
-}
+};
+
+export default FamilySection;

@@ -1,5 +1,38 @@
 [
   {
+    "id": 1,
+    "status": "Single",
+    "user_friendly_label": "Pas de relation récente.",
+    "internal_label": "No recent relationship."
+  },
+  {
+    "id": 2,
+    "status": "Single for X Months/Years",
+    "user_friendly_label": "Vous êtes célibataire depuis X mois/années.",
+    "internal_label": "User has been single for a defined period (proof required for monetization).",
+    "requires_duration": true
+  },
+  {
+    "id": 3,
+    "status": "Never Married",
+    "user_friendly_label": "Représente une vision traditionnelle où les relations sont liées au mariage.",
+    "internal_label": "Represents a traditional view where relationships are tied to marriage."
+  },
+  {
+    "id": 4,
+    "status": "Last Relationship Ended X Months/Years Ago",
+    "user_friendly_label": "Votre dernière relation s'est terminée il y a X mois/années.",
+    "internal_label": "User's last relationship ended X months/years ago (proof required for monetization).",
+    "requires_duration": true
+  },
+  {
+    "id": 5,
+    "status": "Separated from Long-Term Partner X Months/Years Ago",
+    "user_friendly_label": "Vous êtes séparé(e) de votre partenaire de longue date depuis X mois/années.",
+    "internal_label": "User separated from a long-term partner X months/years ago (proof required for monetization).",
+    "requires_duration": true
+  },
+  {
     "id": 6,
     "status": "Divorced (Civil)",
     "user_friendly_label": "Vous avez divorcé légalement.",

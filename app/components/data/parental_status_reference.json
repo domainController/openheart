@@ -1,0 +1,34 @@
+[
+  {
+    "value": "single_parent",
+    "label": "Single Parent Raising Children Alone"
+  },
+  {
+    "value": "shared_custody",
+    "label": "Shared Custody (Active Co-Parenting)"
+  },
+  {
+    "value": "joint_custody_geo",
+    "label": "Joint Custody Parent (Geographic Restriction)"
+  },
+  {
+    "value": "co_parenting_no_legal",
+    "label": "Co-Parenting Without Legal Agreement"
+  },
+  {
+    "value": "limited_contact",
+    "label": "Limited Parental Contact"
+  },
+  {
+    "value": "full_custody",
+    "label": "Has Full Custody of Children"
+  },
+  {
+    "value": "no_longer_involved",
+    "label": "No Longer Involved as a Parent"
+  },
+  {
+    "value": "not_disclosed",
+    "label": "Prefer Not to Say"
+  }
+]

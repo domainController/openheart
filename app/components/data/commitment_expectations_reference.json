@@ -1,0 +1,34 @@
+[
+  {
+    "value": "marriage_religious",
+    "label": "Marriage-Based Union \u2013 Religious"
+  },
+  {
+    "value": "marriage_civil",
+    "label": "Marriage-Based Union \u2013 Civil"
+  },
+  {
+    "value": "life_partnership",
+    "label": "Long-Term Life Partnership (Non-Marital)"
+  },
+  {
+    "value": "short_term",
+    "label": "Short-Term Relationship"
+  },
+  {
+    "value": "undecided",
+    "label": "Still Exploring / Not Sure Yet"
+  },
+  {
+    "value": "not_interested",
+    "label": "Not Interested in Commitment"
+  },
+  {
+    "value": "situationship",
+    "label": "Situationship / Casual but Exclusive"
+  },
+  {
+    "value": "open_relationship",
+    "label": "Open Relationship or Ethical Non-Monogamy"
+  }
+]
