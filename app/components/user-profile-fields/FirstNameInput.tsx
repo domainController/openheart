@@ -1,4 +1,4 @@
-// app/components/formFields/FirstNameInput.tsx
+// app/components/user-profile-fields/FirstNameInput.tsx
 "use client";
 
 import { Input } from "@/components/design/input";

@@ -1,38 +1,41 @@
-// app/components/GridSectionLayout.tsx
 "use client";
 
-import { DndContext, closestCenter, DragEndEvent } from "@dnd-kit/core";
-import { useState } from "react";
-import DroppableZone from "@/app/components/DroppableZone";
-import { sectionsData } from "@/app/data/sectionsData";
+import React from "react";
 
-export default function GridSectionLayout() {
-  const [sections, setSections] = useState(sectionsData);
+interface Section {
+  id: string;
+  content?: React.ReactNode;
+}
 
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-    if (active.id !== over?.id) {
-      const oldIndex = sections.findIndex((s) => s.id === active.id);
-      const newIndex = sections.findIndex((s) => s.id === over?.id);
-      const newSections = [...sections];
-      const [moved] = newSections.splice(oldIndex, 1);
-      newSections.splice(newIndex, 0, moved);
-      setSections(newSections);
-    }
-  };
+interface GridLayoutWrapperProps {
+  sections: Section[];
+}
 
+export default function GridLayoutWrapper({
+  sections,
+}: GridLayoutWrapperProps) {
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <div className="grid grid-cols-4 grid-rows-4 gap-4 p-4 bg-gray-100 min-h-screen">
-        {sections.map((section, index) => (
-          <DroppableZone
+    <div className="w-full min-h-screen bg-blue-100 p-8">
+      <div className="grid grid-cols-4 gap-4 w-full min-h-screen">
+        {sections.map((section) => (
+          <div
             key={section.id}
-            id={section.id}
-            title={section.title}
-            content={section.content}
-          />
+            className="bg-white rounded-2xl shadow p-4 h-full min-h-[160px] flex flex-col justify-start"
+          >
+            <h3 className="text-sm font-semibold text-gray-800 mb-2">
+              {section.id.replace("section-", "Section ")}
+            </h3>
+
+            {section.content ? (
+              section.content
+            ) : (
+              <p className="text-sm italic text-muted-foreground">
+                Drag a component here
+              </p>
+            )}
+          </div>
         ))}
       </div>
-    </DndContext>
+    </div>
   );
 }
