@@ -1,16 +1,16 @@
 # 🧠 OpenHeart – Dev Environment for Proposal
 
-OpenHeart is the development environment of **Proposal**, 
+OpenHeart is the development environment of **Proposal**,
 
 ## 🧩 Microservices (Conceptual + Functional)
 
-| Service Name | Role | Alias |
-|--------------|------|-------|
-| `portrait`   | Profile management | (User Profile) |
-| `suitor`     | Partner preferences | (User Preferences) |
-| `studio`     | Photo sessions & uploads | (Photoshoot Service) |
-| `trust`      | Secure storage of verified information | (Vault) |
-| `draft`      | Incoming new users / sandbox entries | (INDs) |
+| Service Name | Role                                   | Alias                |
+| ------------ | -------------------------------------- | -------------------- |
+| `portrait`   | Profile management                     | (User Profile)       |
+| `suitor`     | Partner preferences                    | (User Preferences)   |
+| `studio`     | Photo sessions & uploads               | (Photoshoot Service) |
+| `trust`      | Secure storage of verified information | (Vault)              |
+| `draft`      | Incoming new users / sandbox entries   | (INDs)               |
 
 ## 📁 Folder Structure
 
@@ -94,4 +94,59 @@ Patrice – `@domainController`
 ---
 Let your dev speak like your brand: intentional, elegant, and full of trust.
 
+# 🧩 layout-v1-profile
+
+## 🎯 Purpose of this Branch
+
+This branch introduces the **first structured and visually realistic version of the user profile layout** for Proposal.
+It marks a turning point: we move from isolated experiments (like drag-and-drop) to a **coherent, modular, MVP-aligned UI**.
+
+---
+
+## ✅ What Was Built
+
+### Layout & Architecture
+- 🧱 Three main blocks: `LeftColumn (Scenario)`, `RightColumn (Track)`, `SidebarRight (Identity)`
+- 🎛️ A horizontal `Navbar` with non-hyperlink popovers (Clothing, Books, Travel, etc.)
+- 🎨 Clean and sober design: no top labels, fields use internal placeholders
+- ⚖️ Symmetry and spacing between columns refined
+- ✅ Sections wrapped via `SectionWrapper` for consistent spacing and background
+
+### Components & Fields
+- 🧩 `BaseSelect.tsx` → generic dropdown component used across all sections
+- 📝 Displayed fields: `CommitmentExpectations`, `PreferredCountriesOfResidence`, `CoupleRelationshipValues`, etc.
+- 🖼️ Both `ScenarioSection` and `TrackSection` now include clean, functional select inputs
+
+---
+
+## 🧭 What Comes Next
+
+1. Fill fields with test JSON values
+2. Connect to Supabase for simulated user record saving
+3. Inject real use cases (e.g., Mike Peaches, Khalil Ben Dekiche)
+4. Prepare Algolia autocomplete for all critical fields
+5. Finalize the Navbar with popover content (book lists, clothing brands, etc.)
+
+---
+
+## 🧠 Why This Branch
+
+Previous branch `no-drag-mvp` is now outdated:
+- Drag & drop was paused
+- Columns are now fixed, intentional, and meaningful
+- We're building toward a **realistic, testable MVP layout**
+
+> `layout-v1-profile` = the **first true vision** of Proposal’s user profile UI
+
+This is the **base for testing, connecting, refining**, and simulating real users.
+
+---
+
+## 💡 Reminder for the Future
+
+> “If I come back to this in 3 weeks, I need to understand exactly where I left off, why this branch was created, and where I was heading.”
+
+This file exists for that reason.
+
+Keep documenting, keep branching with intention, and Proposal will keep growing beautifully. 🚀
 ```
