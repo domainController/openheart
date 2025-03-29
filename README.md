@@ -150,3 +150,56 @@ This file exists for that reason.
 
 Keep documenting, keep branching with intention, and Proposal will keep growing beautifully. 🚀
 ```
+# 🛡️ Project Protection Plan - Proposal
+
+## 1. 📜 License: Business Source License (BUSL 1.1)
+
+> Use limitation: You may use the code freely **for non-commercial or evaluation purposes**. Commercial use, copying, redistribution, or hosting as a service requires permission or a license agreement.
+
+**BUSL Summary:**
+- ✅ Free use for development & evaluation
+- ❌ No production / commercial use without license
+- 🔓 Optional open-source release date (e.g. after 4 years)
+
+```text
+This code is licensed under the Business Source License 1.1.
+Use is permitted for non-commercial purposes. Commercial use
+requires a license. See LICENSE file for full terms.
+```
+
+## 2. 📄 README Purpose of This Branch
+
+This branch represents a major step: **first structured profile layout** with:
+- Modular `Navbar` using popovers (Books, Clothes, etc.)
+- Clean left/right column layout
+- Section by section organization for user data
+
+We moved from early component experiments to a **visually clear and scalable foundation**.
+
+## 3. 🤝 Founding Developer Pledge
+
+If you collaborate on this code during the open phase, you agree to:
+- Not commercialize or clone the idea without written permission.
+- Accept that the project may become private at any time.
+- Be considered for future co-founder or dev roles based on contribution.
+
+✅ Optional: contributors can sign a `PLEDGE.md` with date + GitHub username.
+
+## 4. 🚧 Startup Mode Checklist
+
+- [x] MVP development in progress
+- [x] UI/UX first structure with Tailwind + React + ShadCN
+- [x] Use case-driven design (romantic status, ambition, verified data)
+- [ ] Connect Supabase for data
+- [ ] Autocomplete with Algolia
+- [ ] Deploy on Clever Cloud
+- [ ] Invite 1–2 trusted devs for review (post-README)
+
+---
+
+🧠 **Remember**: This project is still under active development and NOT yet open for reuse or commercial exploitation. Contributions are welcome, but under the terms of the license.
+
+For more, contact: `noyau.imperatif@gmail.com`
+
+— Proposal Team
+
