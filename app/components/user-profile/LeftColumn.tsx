@@ -1,14 +1,10 @@
-"use client";
-
-import React from "react";
 import ScenarioSection from "@/app/components/sections/ScenarioSection";
 
 const LeftColumn = () => {
   return (
-    <div className="w-1/2 flex flex-col gap-8">
+    <section className="flex flex-col gap-1 w-full">
       <ScenarioSection />
-    </div>
+    </section>
   );
 };
-
 export default LeftColumn;

@@ -1,16 +1,23 @@
-type SectionWrapperProps = {
-  title: string;
-  children: React.ReactNode;
-};
+"use client";
 
-export default function SectionWrapper({
-  title,
-  children,
-}: SectionWrapperProps) {
+import React from "react";
+
+interface SectionWrapperProps {
+  title?: string;
+  children: React.ReactNode;
+}
+
+const SectionWrapper = ({ title, children }: SectionWrapperProps) => {
   return (
-    <section className="border border-gray-300 rounded-lg p-4 mb-6">
-      <h2 className="text-xl font-bold mb-4">{title}</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{children}</div>
+    <section className="flex flex-col gap-3 p-4 bg-white rounded-lg shadow-sm">
+      {title && (
+        <h2 className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-2">
+          {title}
+        </h2>
+      )}
+      {children}
     </section>
   );
-}
+};
+
+export default SectionWrapper;

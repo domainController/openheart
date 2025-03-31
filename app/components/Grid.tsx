@@ -1,29 +1,16 @@
-// app/components/Grid.tsx
-"use client";
-
-import PhotoSlider from "./PhotoSlider";
-import BasicInfoSidebar from "./BasicInfoSidebar";
-import AspirationsSection from "./AspirationsSection";
-import RelationshipExpectationsSection from "./RelationshipExpectationsSection";
-import FamilySection from "./FamilySection";
+import FamilySection from "@/app/components/FamilySection";
+import PhotoSlider from "@/app/components/PhotoSlider";
+import AspirationsSection from "@/app/components/AspirationsSection";
+import SidebarRight from "@/app/components/SidebarRight";
 
 export default function Grid() {
   return (
-    <div className="grid grid-cols-12 gap-4 w-full p-6 min-h-screen bg-slate-100">
-      {/* Centre - Slider */}
-      <div className="col-span-9">
-        <PhotoSlider />
-
-        <div className="space-y-6 mt-6">
-          <AspirationsSection />
-          <RelationshipExpectationsSection />
-          <FamilySection />
-        </div>
-      </div>
-
-      {/* Colonne droite */}
-      <div className="col-span-3">
-        <BasicInfoSidebar />
+    <div className="p-8 space-y-4 bg-white text-black min-h-screen">
+      <PhotoSlider />
+      <AspirationsSection />
+      <FamilySection />
+      <div className="md:col-span-1">
+        <SidebarRight />
       </div>
     </div>
   );

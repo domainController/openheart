@@ -1,22 +1,14 @@
-"use client";
-
 import React from "react";
 
-const DesiredPrimaryIncomeEarnerSelect = () => {
+const Component = () => {
   return (
-    <div className="bg-white border border-gray-200 rounded-md p-3 shadow-sm">
-      <label className="block text-sm font-medium text-gray-700 mb-1">
-        Who should be the primary income earner?
-      </label>
-      <select className="w-full border border-gray-300 rounded-md p-2 text-sm">
-        <option value="">Select a preference</option>
-        <option value="self">Me (the user)</option>
-        <option value="partner">My future partner</option>
-        <option value="equal">Equal responsibility</option>
-        <option value="flexible">Open / Depends on context</option>
-      </select>
-    </div>
+    <select className="w-full p-2 border rounded" placeholder="Who should be the primary income earner?">
+      <option value="">Who should be the primary income earner?</option>
+      <option value="example1">Example 1</option>
+      <option value="example2">Example 2</option>
+      <option value="example3">Example 3</option>
+    </select>
   );
 };
 
-export default DesiredPrimaryIncomeEarnerSelect;
+export default Component;
